@@ -87,3 +87,6 @@ while (!$selectedPokemon1->IsDead() && !$selectedPokemon2->IsDead()) {
             });
         }, <?= 4000 + $time_counter_sec ?>);
     </script>
+
+
+
