@@ -87,6 +87,37 @@ class pokemon
         return $damage;
     }
 
+    public function effectiveness($enemy): int
+    {
+        return 2;
+    }
+    public function generateHpBar()
+    {
+        if ($this->maxHP == 0) {
+            $hpPercentage = 0;
+        } else {
+            $hpPercentage = round(($this->HP / $this->maxHP) * 100);
+        }
+
+        $hpPercentage = max(0, min(100, $hpPercentage));
+
+        if ($hpPercentage < 25) {
+            $barColor = '#da251c';
+        } elseif ($hpPercentage < 50) {
+            $barColor = '#f8c301';
+        } else {
+            $barColor = '#00923f';
+        }
+
+        return '
+    <div style="background-color:#c2c2c2; border:2px solid black; border-radius:15px; overflow:hidden;position:relative;">
+        <div style="background-color:' . $barColor . '; width:' . $hpPercentage . '%; height:100%; position:absol width:200px; height:25px; ute; top:0; left:0;"></div>
+        <div style="position:absolute; top:0; left:0; width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; z-index:1;">
+            ' . $hpPercentage . '% HP
+        </div>
+    </div>';
+    }
+
 
 
 }
