@@ -87,6 +87,103 @@ while (!$selectedPokemon1->IsDead() && !$selectedPokemon2->IsDead()) {
             });
         }, <?= 4000 + $time_counter_sec ?>);
     </script>
+    <?php if ($selectedPokemon2->IsDead()) { ?>
+        <tr>
+            <td colspan="2" style="display: none; color: green;" class="dead2">
+                <script>
+                    setTimeout(function() {
+                        const dead2 = document.querySelector('.dead2');
+
+
+                        const message = document.createElement('h2');
+                        message.innerHTML = 'YOU WON! , <?= $selectedPokemon2->getName() ?> was defeated by <?= $selectedPokemon1->getName() ?>!';
+                        dead2.appendChild(message);
+                        dead2.style.display = '';
+                        dead2.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        document.querySelector('.battle_audio').pause();
+                        document.querySelector('.victory').volume = 0.1;
+                        document.querySelector('.victory').play();
+                    }, <?= 6000 + $time_counter_sec ?>);
+                </script>
+            </td>
+        </tr>
+        <?php break; ?>
+    <?php } ?>
+
+
+    <tr class="table-danger">
+        <td colspan="2" style="display:none;" class="<?= $pokemon2_attack_class ?>"></td>
+    </tr>
+
+    <script>
+        setTimeout(function() {
+            const pokemon2Attack = document.querySelector('.<?= $pokemon2_attack_class ?>');
+            <?php if ($selectedPokemon2->effectiveness($selectedPokemon1) == 0) { ?>
+                pokemon2Attack.innerHTML += '<p><?= $selectedPokemon2->getName() ?> attacked <?= $selectedPokemon1->getName() ?> and dealt <?= $damage2 ?> .<strong> It was not very effective!</strong></p>';
+                document.querySelector('.not_very').volume = 0.2;
+                document.querySelector('.not_very').play();
+            <?php } elseif ($selectedPokemon2->effectiveness($selectedPokemon1) == 1) { ?>
+                pokemon2Attack.innerHTML += '<p><?= $selectedPokemon2->getName() ?> attacked <?= $selectedPokemon1->getName() ?> and dealt <?= $damage2 ?> . <strong>It was super effective!</strong></p>';
+                document.querySelector('.super').volume = 0.2;
+                document.querySelector('.super').play();
+            <?php } elseif ($selectedPokemon2->effectiveness($selectedPokemon1) == 2) { ?>
+                pokemon2Attack.innerHTML += '<p><?= $selectedPokemon2->getName() ?> attacked <?= $selectedPokemon1->getName() ?> and dealt <?= $damage2 ?> . <strong>It was a normal attack!</strong></p>';
+            <?php } ?>
+            pokemon2Attack.innerHTML += '<p><?= $selectedPokemon1->getName() ?> has <?= $selectedPokemon1->getHP() ?> HP left!</p>';
+            pokemon2Attack.style.display = '';
+            pokemon2Attack.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }, <?= 6000 + $time_counter_sec ?>);
+    </script>
+
+    <?php if ($selectedPokemon1->IsDead()) { ?>
+        <tr>
+            <td colspan="2" style="display:none;color:red" class="dead1">
+                <script>
+                    setTimeout(function() {
+                        const dead1 = document.querySelector('.dead1');
+                        dead1.innerHTML += '<h2>YOU LOST! , <?= $selectedPokemon1->getName() ?> was defeated by <?= $selectedPokemon2->getName() ?>!</h2>';
+                        dead1.style.display = '';
+                        dead1.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                        document.querySelector('.battle_audio').pause();
+                        document.querySelector('.lose').volume = 0.2;
+                        document.querySelector('.lose').play();
+                    }, <?= 8000 + $time_counter_sec ?>);
+                </script>
+            </td>
+        </tr>
+        <?php break; ?>
+    <?php } ?>
+
+<?php
+    $time_counter += 3;
+    $round_counter++;
+}
+?>
+
+<tr>
+    <td colspan="2" class="battle_ended">
+        <script>
+            setTimeout(function() {
+                const battleEnded = document.querySelector('.battle_ended');
+                battleEnded.innerHTML += '<h2 style="color:blue">Battle ended!</h2>';
+                battleEnded.style.display = '';
+                battleEnded.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }, <?= 8500 + $time_counter_sec ?>);
+        </script>
+    </td>
+</tr>
 
 
 
