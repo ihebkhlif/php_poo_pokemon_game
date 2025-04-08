@@ -127,6 +127,24 @@ if (isset($_POST['reset'])) { ?>
                                 <option value="Alakazam" <?php if (isset($_POST['pokemon1']) && $_POST['pokemon1'] == "Alakazam") echo "selected"; ?>>Alakazam</option>
                             </select>
                         </td>
+                        <td>
+                            <select name="pokemon2" id="pokemon2" class="form-select" aria-label="Default select example">
+                                <option value="0" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "0") echo "selected"; ?>>Choose your Pokemon</option>
+                                <option value="Pikachu" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Pikachu") echo "selected"; ?>>Pikachu</option>
+                                <option value="Charmander" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Charmander") echo "selected"; ?>>Charmander</option>
+                                <option value="Squirtle" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Squirtle") echo "selected"; ?>>Squirtle</option>
+                                <option value="Bulbasaur" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Bulbasaur") echo "selected"; ?>>Bulbasaur</option>
+                                <option value="Charizard" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Charizard") echo "selected"; ?>>Charizard</option>
+                                <option value="Blastoise" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Blastoise") echo "selected"; ?>>Blastoise</option>
+                                <option value="Venusaur" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Venusaur") echo "selected"; ?>>Venusaur</option>
+                                <option value="Gengar" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Gengar") echo "selected"; ?>>Gengar</option>
+                                <option value="Dragonite" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Dragonite") echo "selected"; ?>>Dragonite</option>
+                                <option value="Lucario" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Lucario") echo "selected"; ?>>Lucario</option>
+                                <option value="Snorlax" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Snorlax") echo "selected"; ?>>Snorlax</option>
+                                <option value="Gyarados" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Gyarados") echo "selected"; ?>>Gyarados</option>
+                                <option value="Alakazam" <?php if (isset($_POST['pokemon2']) && $_POST['pokemon2'] == "Alakazam") echo "selected"; ?>>Alakazam</option>
+                            </select>
+                        </td>
                         </tr>
                     <tr class="table-secondary">
                         <td colspan="2">
