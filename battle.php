@@ -46,4 +46,44 @@ while (!$selectedPokemon1->IsDead() && !$selectedPokemon2->IsDead()) {
             <img src='<?php echo htmlspecialchars($selectedPokemon2->getImage()) ?>' alt='Pokemon Image' class='img-fluid'>
         </td>
     </tr>
-    
+
+
+
+    <script>
+        setTimeout(function() {
+            document.querySelector('.<?= $pokemon_display_class ?>').style.display = '';
+            document.querySelector('.<?= $pokemon_display_class ?>').scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }, <?= 3000 + $time_counter_sec ?>);
+    </script>
+
+    <tr class="table-primary">
+        <td colspan="2" style="display:none;" class="<?= $pokemon_attack_class ?>"></td>
+    </tr>
+    <!-- //1st pokemon attack -->
+    <script>
+        setTimeout(function() {
+            const pokemon1Attack = document.querySelector('.<?= $pokemon_attack_class ?>');
+            <?php if ($selectedPokemon1->effectiveness($selectedPokemon2) == 0) { ?>
+                pokemon1Attack.innerHTML += '<p><?= $selectedPokemon1->getName() ?> attacked <?= $selectedPokemon2->getName() ?> and dealt <?= $damage1 ?> . <strong>It was not very effective!</strong></p>';
+                document.querySelector('.not_very').volume = 0.2;
+                document.querySelector('.not_very').play();
+            <?php } elseif ($selectedPokemon1->effectiveness($selectedPokemon2) == 1) { ?>
+                pokemon1Attack.innerHTML += '<p><?= $selectedPokemon1->getName() ?> attacked <?= $selectedPokemon2->getName() ?> and dealt <?= $damage1 ?> . <strong>It was super effective!</strong></p>';
+                document.querySelector('.super').volume = 0.2;
+                document.querySelector('.super').play();
+            <?php } elseif ($selectedPokemon1->effectiveness($selectedPokemon2) == 2) { ?>
+                pokemon1Attack.innerHTML += '<p><?= $selectedPokemon1->getName() ?> attacked <?= $selectedPokemon2->getName() ?> and dealt <?= $damage1 ?> . <strong>It was a normal attack!</strong></p>';
+                document.querySelector('.normal').volume = 0.2;
+                document.querySelector('.normal').play();
+            <?php } ?>
+            pokemon1Attack.innerHTML += '<p><?= $selectedPokemon2->getName() ?> has <?= $selectedPokemon2->getHP() ?> HP left!</p>';
+            pokemon1Attack.style.display = '';
+            pokemon1Attack.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }, <?= 4000 + $time_counter_sec ?>);
+    </script>
