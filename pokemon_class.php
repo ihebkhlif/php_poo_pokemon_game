@@ -117,10 +117,118 @@ class pokemon
         </div>
     </div>';
     }
-
-
-
 }
-
-
-
+class fire_type extends pokemon
+{
+    public function __construct($name, $image, $HP, AttackPokemon $attackPokemon)
+    {
+        parent::__construct($name, $image, $HP, $attackPokemon);
+    }
+    public function attack($enemy): int
+    {
+        $damage = rand($this->attackPokemon->atk_min, $this->attackPokemon->atk_max);
+        if ($enemy instanceof water_type) {
+            $damage *= 0.5;
+        } elseif ($enemy instanceof grass_type) {
+            $damage *= 2;
+        } elseif ($enemy instanceof fire_type) {
+            $damage *= 0.5;
+        }
+        if (rand(1, 100) <= $this->attackPokemon->sp_atk_chance) {
+            $damage = ($this->attackPokemon->sp_atk) * $damage;
+            $enemy->HP -= $damage;
+            $enemy->HP = max($enemy->HP, 0);
+        } else {
+            $enemy->HP -= $damage;
+            $enemy->HP = max($enemy->HP, 0);
+        }
+        return $damage;
+    }
+    public function effectiveness($enemy): int
+    {
+        if ($enemy instanceof water_type) {
+            return 0;
+        } elseif ($enemy instanceof grass_type) {
+            return 1;
+        } elseif ($enemy instanceof fire_type) {
+            return 0;
+        }
+        return 2;
+    }
+}
+class water_type extends pokemon
+{
+    public function __construct($name, $image, $HP, AttackPokemon $attackPokemon)
+    {
+        parent::__construct($name, $image, $HP, $attackPokemon);
+    }
+    public function attack($enemy): int
+    {
+        $damage = rand($this->attackPokemon->atk_min, $this->attackPokemon->atk_max);
+        if ($enemy instanceof fire_type) {
+            $damage *= 2;
+        } elseif ($enemy instanceof grass_type) {
+            $damage *= 0.5;
+        } elseif ($enemy instanceof water_type) {
+            $damage *= 0.5;
+        }
+        if (rand(1, 100) <= $this->attackPokemon->sp_atk_chance) {
+            $damage = ($this->attackPokemon->sp_atk) * $damage;
+            $enemy->HP -= $damage;
+            $enemy->HP = max($enemy->HP, 0);
+        } else {
+            $enemy->HP -= $damage;
+            $enemy->HP = max($enemy->HP, 0);
+        }
+        return $damage;
+    }
+    public function effectiveness($enemy): int
+    {
+        if ($enemy instanceof fire_type) {
+            return 1;
+        } elseif ($enemy instanceof grass_type) {
+            return 0;
+        } elseif ($enemy instanceof water_type) {
+            return 0;
+        }
+        return 2;
+    }
+}
+class grass_type extends pokemon
+{
+    public function __construct($name, $image, $HP, AttackPokemon $attackPokemon)
+    {
+        parent::__construct($name, $image, $HP, $attackPokemon);
+    }
+    public function attack($enemy): int
+    {
+        $damage = rand($this->attackPokemon->atk_min, $this->attackPokemon->atk_max);
+        if ($enemy instanceof fire_type) {
+            $damage *= 0.5;
+        } elseif ($enemy instanceof water_type) {
+            $damage *= 2;
+        } elseif ($enemy instanceof grass_type) {
+            $damage *= 0.5;
+        }
+        if (rand(1, 100) <= $this->attackPokemon->sp_atk_chance) {
+            $damage = ($this->attackPokemon->sp_atk) * $damage;
+            $enemy->HP -= $damage;
+            $enemy->HP = max($enemy->HP, 0);
+        } else {
+            $enemy->HP -= $damage;
+            $enemy->HP = max($enemy->HP, 0);
+        }
+        return $damage;
+    }
+    public function effectiveness($enemy): int
+    {
+        if ($enemy instanceof fire_type) {
+            return 0;
+        } elseif ($enemy instanceof water_type) {
+            return 1;
+        } elseif ($enemy instanceof grass_type) {
+            return 0;
+        }
+        return 2;
+    }
+}
