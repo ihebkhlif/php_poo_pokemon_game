@@ -127,4 +127,22 @@ if (isset($_POST['reset'])) { ?>
                                 <option value="Alakazam" <?php if (isset($_POST['pokemon1']) && $_POST['pokemon1'] == "Alakazam") echo "selected"; ?>>Alakazam</option>
                             </select>
                         </td>
-                        
+                        </tr>
+                    <tr class="table-secondary">
+                        <td colspan="2">
+                            <button
+                                <?php if (isset($_POST['pokemon1']) && $_POST['pokemon1'] != "0" && isset($_POST['pokemon2']) && $_POST['pokemon2'] != "0") {
+                                    echo "style='display:none'";
+                                }
+                                ?>
+                                type="submit" class="btn btn-primary start">Start Battle</button>
+                        </td>
+                    </tr>
+                </form>
+                <?php
+                include "show_pokemon.php";
+                ?>
+        </table>
+    </div>
+    </div>
+    </div>
