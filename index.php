@@ -146,3 +146,33 @@ if (isset($_POST['reset'])) { ?>
     </div>
     </div>
     </div>
+
+    <script>
+        // show the alert box if no or 1 pokemon is selected
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector(".pokemon-form");
+            const alertBox = document.querySelector(".alert");
+            const start = document.querySelector(".start");
+            const pokemon1 = document.querySelector("#pokemon1");
+            const pokemon2 = document.querySelector("#pokemon2");
+            form.addEventListener("submit", function(e) {
+
+                e.preventDefault();
+                var selectedPokemon1 = pokemon1.value;
+                var selectedPokemon2 = pokemon2.value;
+
+                if (selectedPokemon1 === "0" || selectedPokemon2 === "0") {
+                    alertBox.style.display = "block";
+                } else {
+                    form.submit();
+                }
+            });
+            pokemon1.addEventListener("change", function() {
+                alertBox.style.display = "none";
+            });
+            pokemon2.addEventListener("change", function() {
+                alertBox.style.display = "none";
+            });
+        });
+        document.querySelector('.lobby_audio').volume = 0.2;
+    </script>
