@@ -73,8 +73,19 @@ class pokemon
         return $this->HP <= 0;
     }
 
-
-
+    public function attack($enemy): int
+    {
+        $damage = rand($this->attackPokemon->atk_min, $this->attackPokemon->atk_max);
+        if (rand(1, 100) <= $this->attackPokemon->sp_atk_chance) {
+            $damage = ($this->attackPokemon->sp_atk) * $damage;
+            $enemy->HP -= $damage;
+            $enemy->HP = max($enemy->HP, 0);
+        } else {
+            $enemy->HP -= $damage;
+            $enemy->HP = max($enemy->HP, 0);
+        }
+        return $damage;
+    }
 
 
 
