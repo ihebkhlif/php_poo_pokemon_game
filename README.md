@@ -1,74 +1,94 @@
 # PHP OOP Pokémon Game
 
-A Pokémon battle game implementation using Object-Oriented Programming (OOP) principles in PHP.
+A simple Pokémon battle game built with PHP using Object-Oriented Programming principles.
 
 ## 📋 Project Overview
 
-This project demonstrates core OOP concepts through the development of an interactive Pokémon game. Players can engage in turn-based battles with various Pokémon, each with unique abilities, stats, and types.
+This project demonstrates fundamental OOP concepts through an interactive turn-based Pokémon battle system. Players can select two Pokémon and watch them battle with type-based advantage mechanics.
 
 ## 🏗️ Project Structure
 
 ```
 php_poo_pokemon_game/
 ├── README.md
-├── classes/                          # Core OOP classes
-│   ├── Pokemon.php                   # Base Pokémon class
-│   ├── Type.php                      # Pokémon type system
-│   ├── Battle.php                    # Battle mechanics
-│   ├── Trainer.php                   # Trainer management
-│   └── Move.php                      # Move/Attack definitions
-├── index.php                         # Application entry point
-├── config.php                        # Configuration and constants
-└── assets/                           # Game resources (optional)
-    ├── images/                       # Pokémon sprites
-    └── data/                         # Pokémon data files
+├── index.php                     # Main entry point - Pokémon selection interface
+├── pokemon_class.php             # Core classes and type definitions
+├── battle.php                    # Battle logic and animations
+├── show_pokemon.php              # Pokémon display/selection logic
+└── soundeffects/                 # Sound effects for battles
 ```
 
 ## 🛠️ Technology Stack
 
 - **Language**: PHP 7.4+
 - **Paradigm**: Object-Oriented Programming (OOP)
-- **Architecture Pattern**: Class-based design with inheritance and polymorphism
+- **Frontend**: HTML, CSS, JavaScript
+- **Features**: Type-based damage calculation, animated battle display
 
-## 📚 Key OOP Concepts Used
+## 📚 Core Classes
 
-### 1. **Classes**
-- `Pokemon`: Represents individual Pokémon with properties (name, level, HP, attacks, type)
-- `Trainer`: Manages trainer data and Pokémon roster
-- `Battle`: Orchestrates battle logic and turn management
-- `Type`: Defines Pokémon types and type advantages
-- `Move`: Represents attacks/moves with damage calculations
+### 1. **AttackPokemon**
+Represents attack statistics for a Pokémon:
+- `atk_min` & `atk_max`: Damage range
+- `sp_atk`: Special attack multiplier
+- `sp_atk_chance`: Chance to trigger special attack
 
-### 2. **Inheritance**
-- Pokémon types may extend a base Pokémon class with type-specific behaviors
-- Specialized Pokémon inherit common attributes from the base class
+### 2. **Pokemon (Base Class)**
+Main Pokémon class with properties:
+- `name`: Pokémon name
+- `image`: Image URL
+- `HP` & `maxHP`: Health points
+- `attackPokemon`: Attack statistics object
 
-### 3. **Encapsulation**
-- Private and protected properties protect internal state
-- Public methods provide controlled access to object data
-- Getters and setters manage property access
+Key methods:
+- `attack($enemy)`: Calculate and apply damage
+- `IsDead()`: Check if defeated
+- `generateHpBar()`: Visual HP bar display
+- `effectiveness($enemy)`: Calculate type advantage
 
-### 4. **Polymorphism**
-- Different Pokémon types may override move execution differently
-- Type advantages calculated polymorphically based on move types
+### 3. **Type Classes** (Inheritance)
+Specialized Pokémon types with type advantage mechanics:
 
-### 5. **Composition**
-- `Trainer` class contains a collection of `Pokemon` objects
-- `Battle` class uses `Pokemon` and `Move` objects
+- **fire_type**: Effective against grass, weak to water
+- **water_type**: Effective against fire, weak to grass
+- **grass_type**: Effective against water, weak to fire
 
-## 🎮 Game Features
+Each type overrides the `attack()` method to apply type multipliers:
+- 2x damage (super effective)
+- 0.5x damage (not very effective)
+- 1x damage (normal)
 
-- **Pokémon Management**: Create and manage Pokémon with individual stats
-- **Type System**: Rock-Paper-Scissors style type advantages
-- **Battle Mechanics**: Turn-based combat with attack calculations
-- **Trainer System**: Manage trainer data and Pokémon teams
-- **Damage Calculation**: Dynamic damage based on stats, types, and moves
+## 🎮 Game Flow
+
+1. **Selection Phase** (index.php)
+   - User selects two Pokémon to battle
+   - Pokémon are instantiated with their stats
+
+2. **Battle Phase** (battle.php)
+   - Turn-based combat system
+   - Each round: Pokémon 1 attacks → Pokémon 2 attacks
+   - Type advantages applied to damage calculations
+   - Battle continues until one Pokémon is defeated
+   - Animated display with sound effects
+
+3. **Display** (show_pokemon.php)
+   - Shows available Pokémon for selection
+   - Displays real-time HP bars during battle
+
+## 🎯 Key Features
+
+- **Type System**: Fire, Water, and Grass types with advantage mechanics
+- **Damage Calculation**: Random damage with special attack chance
+- **Type Effectiveness**: Modifiers based on matchups
+- **Visual HP Bar**: Color-coded health display (red/yellow/green)
+- **Animations**: Timed battle sequence with smooth scrolling
+- **Sound Effects**: Audio feedback for attacks and outcomes
 
 ## 🚀 How to Run
 
 ### Prerequisites
 - PHP 7.4 or higher
-- Web server (Apache, Nginx) or PHP built-in server
+- Web server or PHP built-in server
 
 ### Installation
 
@@ -88,53 +108,47 @@ php -S localhost:8000
 http://localhost:8000
 ```
 
-## 📖 Usage Example
+## 💻 Usage Example
 
 ```php
 // Create Pokémon
-$pikachu = new Pokemon("Pikachu", 50, "Electric");
-$charizard = new Pokemon("Charizard", 50, "Fire");
+$attack_stats = new AttackPokemon(
+    atk_min: 10,      // minimum damage
+    atk_max: 20,      // maximum damage
+    sp_atk: 1.5,      // special attack multiplier
+    sp_atk_chance: 30 // 30% chance for special attack
+);
 
-// Create trainers
-$trainer1 = new Trainer("Ash");
-$trainer1->addPokemon($pikachu);
+$pikachu = new fire_type(
+    name: "Pikachu",
+    image: "url_to_image",
+    HP: 100,
+    attackPokemon: $attack_stats
+);
 
-$trainer2 = new Trainer("Gary");
-$trainer2->addPokemon($charizard);
+// Check if defeated
+if ($pikachu->IsDead()) {
+    echo "Pikachu has been defeated!";
+}
 
-// Start battle
-$battle = new Battle($trainer1, $trainer2);
-$battle->start();
+// Calculate damage with type advantage
+$damage = $pikachu->attack($enemy_pokemon);
 ```
 
-## 📝 Code Organization Best Practices
+## 🔧 OOP Concepts Used
 
-- **Single Responsibility Principle**: Each class has one reason to change
-- **DRY (Don't Repeat Yourself)**: Common logic abstracted into base classes
-- **Clear Naming**: Class and method names clearly describe their purpose
-- **Documentation**: Comments explain complex logic
+- **Inheritance**: Type classes extend base Pokemon class
+- **Encapsulation**: Properties with getters/setters
+- **Polymorphism**: Attack method overridden in type classes
+- **Constructor**: Initialize objects with stats
+- **Method Overriding**: Type-specific damage calculations
 
-## 🎯 Learning Outcomes
+## 📝 Notes
 
-This project teaches:
-- Class design and structure
-- Inheritance hierarchies
-- Method overriding
-- Property access modifiers
-- Object composition
-- Practical OOP design patterns
-
-## 🤝 Contributing
-
-Feel free to fork and submit pull requests with improvements or additional features.
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
-## 👨‍💻 Author
-
-**ihebkhlif**
+- Type advantage calculations: Fire > Grass > Water > Fire (rock-paper-scissors style)
+- Special attacks trigger randomly with set probability
+- Battle animations use JavaScript timers for visual display
+- HP is capped at 0 (no negative values)
 
 ---
 
